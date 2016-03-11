@@ -20,14 +20,23 @@ namespace EFMySQLBoolStrap.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        static ApplicationDbContext()
+        {
+            Database.SetInitializer(new MySqlInitializer());
+
+        }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+
+            base.Configuration.ProxyCreationEnabled = false;
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<EFMySQLBoolStrap.Models.EFRegTST> EFRegTSTs { get; set; }
     }
 }
